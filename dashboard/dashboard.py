@@ -59,12 +59,10 @@ st.write(
 '''
 )
 
-filtered_data = main_data[(main_data['yr'] == tahun) & (main_data['mnth'] == bulan)]
+registered, casual = main_data[(main_data['yr'] == tahun) & (main_data['mnth'] == bulan)][['registered', 'casual']].sum()
 
-if not filtered_data.empty:
-    total = filtered_data[['registered', 'casual']].sum()
-    st.subheader(f'Total Peminjaman di {bulan} {tahun}')
-    st.write(f"Registered: {total['registered']}")
-    st.write(f"Casual: {total['casual']}")
-else:
-    st.write(f'Tidak ada data untuk {bulan} {tahun}.')
+st.subheader(f'Total Peminjaman di {bulan} {tahun}')
+st.write(f"Registered: {total['registered']}")
+st.write(f"Casual: {total['casual']}")
+
+st.caption('Fabian©')
