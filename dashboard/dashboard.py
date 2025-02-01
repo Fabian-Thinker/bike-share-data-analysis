@@ -7,14 +7,35 @@ main_data = pd.read_csv('dashboard/main_data.csv')
 
 st.title('Bike Sharing Dashboard')
 
+st.sidebar.title("Informasi")
+st.sidebar.write("Ini adalah dashboard untuk menganalisis data peminjaman sepeda berdasarkan tanggal, musim, kondisi cuaca, dan jenis peminjam.")
+st.sidebar.write("Pilih tahun dan bulan untuk menentukan tren peminjaman sepeda pada bulan dan tahun tertentu.")
+
+st.subheader('Filter Data')
+tahun = st.selectbox('Pilih Tahun', [2011, 2012])
+bulan = st.selectbox('Pilih Bulan', main_data['mnth'].unique())
+
+
+st.write(
+'''
+#### Tren peminjaman sepeda pada bulan tertentu
+'''
+)
+plt.figure(figsize=(15, 6))
+sns.lineplot(x='dteday', y='cnt', data=main_data[(main_data['yr'] == tahun) & (main_data['mnth'] == bulan)], color='brown')
+plt.title(f'Dately Bike Rental in {bulan} {tahun}')
+plt.xlabel('Date')
+plt.ylabel('Rental Amount')
+plt.xticks(rotation=45)
+plt.grid(True)
+
+st.pyplot(plt)
+
 st.write(
 '''
 #### Pada kondisi cuaca dan musim apa sepeda terpinjam paling banyak dan paling sedikit?
 '''
 )
-
-tahun = st.selectbox('Pilih Tahun', [2011, 2012])
-bulan = st.selectbox('Pilih Bulan', main_data['mnth'].unique())
 
 weathery_amounts = main_data[(main_data['yr'] == tahun) & (main_data['mnth'] == bulan)].groupby('weathersit').cnt.sum().sort_values(ascending=False)
 sizes = weathery_amounts.values
@@ -34,7 +55,7 @@ for i, value in enumerate(sizes):
 
 st.pyplot(fig_weather)
 
-#seasonal is only yearly
+#seasonal is only yearly, not effected by month input
 
 seasonal_amounts = main_data[main_data['yr'] == tahun].groupby('season').cnt.sum().sort_values(ascending=False)
 sizes = seasonal_amounts.values
@@ -62,7 +83,7 @@ st.write(
 registered, casual = main_data[(main_data['yr'] == tahun) & (main_data['mnth'] == bulan)][['registered', 'casual']].sum()
 
 st.subheader(f'Total Peminjaman di {bulan} {tahun}')
-st.write(f"Registered: {total['registered']}")
-st.write(f"Casual: {total['casual']}")
+st.write(f"Registered: {registered}")
+st.write(f"Casual: {casual}")
 
-st.caption('Fabian©')
+st.caption('Fabian©copyright')
