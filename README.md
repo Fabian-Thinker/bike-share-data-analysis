@@ -12,6 +12,7 @@ pip install -r requirements.txt
 ```
 cd dashboard
 ```
+**Baru jalankan:**
 ```
 streamlit run dashboard.py
 ```
