@@ -7,11 +7,11 @@ conda activate main-ds
 pip install -r requirements.txt
 ```
 
+## Run steamlit app
 **Pastikan sudah masuk ke folder project**
 ```
 cd dashboard
 ```
-## Run steamlit app
 ```
 streamlit run dashboard.py
 ```
